@@ -20,7 +20,6 @@ class espacioController extends Controller
 
     function estadoEspacio($id)
     {
-
         $espacio = Espacio::where('id_espacio', $id)->first();
         $idIngreso = $espacio -> id_ingreso;
         if($idIngreso){

@@ -393,4 +393,21 @@ class ReservaController extends Controller
         $reservas = Reserva::all();
         return $reservas;
     }
+    public function refresh(){
+        $reservas = Reserva::all();
+        foreach($reservas as $row){
+            $fechaHora = $reservas->reservada_desde_fecha." ".$reservas->reservada_desde_hora;
+            //$fechaHora1 = $reservas->reservada_hasta_fecha." ".$reservas->reservada_hasta_hora;
+            $datetime = new DateTime($fechaHora);
+            $hoy = new DateTime(date("Y-m-d H:i:s"));
+            if($datetime < $hoy){
+                $espacio = Espacio::where('id_espacio', $row->id_espacio)->first();
+                if($espacio->estado != "reservado"){
+                    $espacio->estado = "reservado";
+                    $espacio->update();
+                    return "Actualizado";
+                }
+            }
+        }
+    }
 }
