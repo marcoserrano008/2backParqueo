@@ -367,7 +367,11 @@ class ReservaController extends Controller
     //nueva ruta
     public function reservar(Request $request){
         $id_usuario = auth()->user()->id;
-        $vehiculo = Vehiculo::select('id_vehiculo')->where('placa','=',$request->placa)->first();
+        $vehiculo = Vehiculo::where('placa', $request->placa)->first();
+        $fechaIni = '';
+        $horaIni = '';
+        $fechaFin = '';
+        $horaFin = '';
         list($fechaIni, $horaIni) = explode(' ', $request->tiempoIni);
         list($fechaFin, $horaFin) = explode(' ', $request->tiempoFin);
 
