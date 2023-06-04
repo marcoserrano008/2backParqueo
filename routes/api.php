@@ -65,6 +65,7 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('ver-espacios', [espacioController::class, 'listEspacios']);
     Route::get('espacio/{id}',[espacioController::class, 'estadoEspacio']);
 
+
 });
 
 
