@@ -65,10 +65,13 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('ver-espacios', [espacioController::class, 'listEspacios']);
     Route::get('espacio/{id}',[espacioController::class, 'estadoEspacio']);
 
-
+    //nuevas rutas Niver
+    Route::post('reservar', [ReservaController::class, 'reservar']);
+    Route::get('getReservas', [ReservaController::class, 'getReservas']);
 });
 
 
 
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/clientes', [AuthController::class, 'clientes']);

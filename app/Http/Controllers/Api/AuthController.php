@@ -30,13 +30,14 @@ class AuthController extends Controller
 
         $token = $user->createToken('main')->plainTextToken;
         $user = Auth::user();
-        $user = Cliente::create([
-            'id_cliente' => $data['ci'],
-            'id_usuario' => $user['id'],
-        ]);
+        $user = new Cliente;
+        $user->id_cliente = $data['ci'];
+        $user->id_usuario = $user['id'];
+        $user->save();
 
         return response(compact('user', 'token'));
     }
+
     public function login(LoginRequest $request)
     {
         $credentials = $request->validated();
@@ -51,21 +52,21 @@ class AuthController extends Controller
         return response(compact('user', 'token'));
     }
 
-
-
-    public function logout(Request $request)
-    {
+    public function logout(Request $request){
         /** @var \App\Models\User $user */
         $user = $request->user();
         $user->currentAccessToken()->delete();
         return response('', 204);
     }
 
-    public function getRol()
-    {
+    public function getRol(){
         $user = Auth::user();
         $rol = $user->rol;
         return ['rol' => $rol];
     }
     
+    public function clientes(){
+        $clientes = Cliente::all();
+        return $clientes;
+    }
 }
