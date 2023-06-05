@@ -367,6 +367,7 @@ class ReservaController extends Controller
     //nueva ruta
     public function reservar(Request $request){
         $id_usuario = auth()->user()->id;
+        $rol = auth()->user()->rol;
         $vehiculo = Vehiculo::where('placa', $request->placa)->first();
         $fechaIni = '';
         $horaIni = '';
@@ -374,7 +375,6 @@ class ReservaController extends Controller
         $horaFin = '';
         list($fechaIni, $horaIni) = explode(' ', $request->tiempoIni);
         list($fechaFin, $horaFin) = explode(' ', $request->tiempoFin);
-
         $reserva = new Reserva;
         $reserva->id_espacio = $request->espacio;
         $reserva->id_vehiculo = $vehiculo->id_vehiculo;
@@ -387,10 +387,19 @@ class ReservaController extends Controller
         $reserva->placa_vehiculo = $request->placa;
         $reserva->id_usuario = $id_usuario;
         $reserva->save();
+        $espacio = Espacio::where('id_espacio', $request->espacio)->first();
+        $espacio->estado = "reservado";
+        $espacio->update();
+
         return "Se hizo la reserva correctamente";
     }
     public function getReservas(){
         $reservas = Reserva::all();
+        return $reservas;
+    }
+    public function getReservasUser(){
+        $id_usuario = auth()->user()->id;
+        $reservas = Reserva::where('id_usuario',$id_usuario)->get();
         return $reservas;
     }
     public function refresh(){

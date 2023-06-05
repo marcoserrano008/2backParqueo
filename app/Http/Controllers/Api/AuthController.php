@@ -30,10 +30,10 @@ class AuthController extends Controller
 
         $token = $user->createToken('main')->plainTextToken;
         $user = Auth::user();
-        $user = new Cliente;
-        $user->id_cliente = $data['ci'];
-        $user->id_usuario = $user['id'];
-        $user->save();
+        $cliente = new Cliente;
+        $cliente->id_cliente = $data['ci'];
+        $cliente->id_usuario = $user['id'];
+        $cliente->save();
 
         return response(compact('user', 'token'));
     }
