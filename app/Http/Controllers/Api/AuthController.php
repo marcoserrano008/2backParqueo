@@ -29,7 +29,6 @@ class AuthController extends Controller
         ]);
 
         $token = $user->createToken('main')->plainTextToken;
-        $user = Auth::user();
         $cliente = new Cliente;
         $cliente->id_cliente = $data['ci'];
         $cliente->id_usuario = $user['id'];
