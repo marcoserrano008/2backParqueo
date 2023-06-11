@@ -28,19 +28,11 @@ class AuthController extends Controller
             'celular' => $data['celular']
         ]);
 
-<<<<<<< HEAD
-        $usuario = User::where("email",$data['email'])->first();
+        $token = $user->createToken('main')->plainTextToken;
         $cliente = new Cliente;
         $cliente->id_cliente = $data['ci'];
-        $cliente->id_usuario = $usuario->id;
-        $cliente->save();
-=======
-        $token = $user->createToken('main')->plainTextToken;
-        /*$cliente = new Cliente;
-        $cliente->id_cliente = $data['ci'];
         $cliente->id_usuario = auth()->user()->id;;
-        $cliente->save();*/
->>>>>>> parent of d400c49 (probando signup)
+        $cliente->save();
 
         $token = $user->createToken('main')->plainTextToken;
         return response(compact('user', 'token'));
