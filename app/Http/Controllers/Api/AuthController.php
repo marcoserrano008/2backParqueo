@@ -25,8 +25,7 @@ class AuthController extends Controller
             'ci' => $data['ci'],
             'apellido_paterno' => $data['apellido_paterno'],
             'apellido_materno' => $data['apellido_materno'],
-            'fecha_nacimiento' => $data['fecha_nacimiento'],
-            'celular' => $data['celular'],
+            'celular' => $data['celular']
         ]);
 
         $usuario = User::where("email",$data['email'])->first();

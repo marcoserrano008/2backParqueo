@@ -28,7 +28,6 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('/user', function (Request $request) {return $request->user();});
     //ver usuarios
     Route::apiResource('/users', UserController::class);
-    Route::get('/usuarios', [AuthController::class, 'usuarios']);
     //ver rol
     Route::get('rol', [AuthController::class,'getRol']);
 
@@ -68,7 +67,7 @@ Route::middleware('auth:sanctum')->group(function() {
 
     //nuevas rutas Niver
     Route::post('reservar', [ReservaController::class, 'reservar']);
-    Route::get('getReservas', [ReservaController::class, 'getReservas']);
+    Route::get('obtenerReservas', [ReservaController::class, 'getReservas']);
     Route::get('getReservasUser', [ReservaController::class, 'getReservasUser']);
     Route::get('refresh', [ReservaController::class, 'refresh']);
     Route::post('habilitarEspacio/{id}',[espacioController::class, 'habilitarEspacio']);
@@ -79,5 +78,5 @@ Route::middleware('auth:sanctum')->group(function() {
 
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/clientes', [AuthController::class, 'clientes']);
-
+Route::get('clientes', [AuthController::class, 'clientes']);
+Route::get('usuarios', [AuthController::class, 'usuarios']);

@@ -392,10 +392,29 @@ class ReservaController extends Controller
             $espacio->estado = "reservado";
             $espacio->update();
         }else if($rol == "guardia"){
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+                'ci' => $data['ci'],
+                'apellido_paterno' => $data['apellido_paterno'],
+                'apellido_materno' => $data['apellido_materno'],
+                'celular' => $data['celular']
+            ]);
             $consulta = Vehiculo::where('placa', $request->placa)->exists();
             if($consulta){
                 $vehiculo = Vehiculo::where('placa', $request->placa)->first();
             }else{
+                $user = new User;
+                $user = User::create([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'password' => bcrypt($data['password']),
+                    'ci' => $data['ci'],
+                    'apellido_paterno' => $data['apellido_paterno'],
+                    'apellido_materno' => $data['apellido_materno'],
+                    'celular' => $data['celular']
+                ]);
                 $vehiculo = new Vehiculo();
                 $vehiculo -> id_cliente = $id_usuario;
                 $vehiculo -> marca = $request -> marca;
@@ -406,7 +425,6 @@ class ReservaController extends Controller
                 $placa = str_replace(' ', '', $placa);
                 $vehiculo -> placa = $placa;
                 $vehiculo->save();
-                $vehiculo = Vehiculo::where('placa', $request->placa)->first();
             }
             $vehiculo = Vehiculo::where('placa', $request->placa)->first();
             $fechaIni = '';
@@ -431,7 +449,6 @@ class ReservaController extends Controller
             $espacio->estado = "reservado";
             $espacio->update();
         }
-        
         return "Se hizo la reserva correctamente";
     }
     public function getReservas(){
