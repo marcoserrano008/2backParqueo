@@ -70,4 +70,9 @@ class AuthController extends Controller
         $clientes = Cliente::all();
         return $clientes;
     }
+
+    public function usuarios(){
+        $usuarios = User::all();
+        return $usuarios;
+    }
 }
