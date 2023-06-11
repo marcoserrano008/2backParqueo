@@ -415,7 +415,7 @@ class ReservaController extends Controller
                     'apellido_materno' => $data['apellido_materno'],
                     'celular' => $data['celular']
                 ]);
-                $vehiculo = new Vehiculo();
+                $vehiculo = new Vehiculo;
                 $vehiculo -> id_cliente = $id_usuario;
                 $vehiculo -> marca = $request -> marca;
                 $vehiculo -> color = $request -> color;
