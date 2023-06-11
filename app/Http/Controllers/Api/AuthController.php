@@ -28,12 +28,12 @@ class AuthController extends Controller
             'fecha_nacimiento' => $data['fecha_nacimiento'],
         ]);
 
-        $token = $user->createToken('main')->plainTextToken;
         $cliente = new Cliente;
         $cliente->id_cliente = $data['ci'];
-        $cliente->id_usuario = auth()->user()->id;;
+        $cliente->id_usuario = $user()->id;
         $cliente->save();
 
+        $token = $user->createToken('main')->plainTextToken;
         return response(compact('user', 'token'));
     }
 

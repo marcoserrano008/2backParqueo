@@ -368,29 +368,70 @@ class ReservaController extends Controller
     public function reservar(Request $request){
         $id_usuario = auth()->user()->id;
         $rol = auth()->user()->rol;
-        $vehiculo = Vehiculo::where('placa', $request->placa)->first();
-        $fechaIni = '';
-        $horaIni = '';
-        $fechaFin = '';
-        $horaFin = '';
-        list($fechaIni, $horaIni) = explode(' ', $request->tiempoIni);
-        list($fechaFin, $horaFin) = explode(' ', $request->tiempoFin);
-        $reserva = new Reserva;
-        $reserva->id_espacio = $request->espacio;
-        $reserva->id_vehiculo = $vehiculo->id_vehiculo;
-        $reserva->reservada_desde_fecha = $fechaIni;
-        $reserva->reservada_desde_hora = $horaIni;
-        $reserva->reservada_hasta_fecha = $fechaFin;
-        $reserva->reservada_hasta_hora = $horaFin;
-        $reserva->fecha_creada = date("Y-m-d");
-        $reserva->hora_creada = date("H:i:s");
-        $reserva->placa_vehiculo = $request->placa;
-        $reserva->id_usuario = $id_usuario;
-        $reserva->save();
-        $espacio = Espacio::where('id_espacio', $request->espacio)->first();
-        $espacio->estado = "reservado";
-        $espacio->update();
-
+        if($rol == "cliente"){
+            $vehiculo = Vehiculo::where('placa', $request->placa)->first();
+            $fechaIni = '';
+            $horaIni = '';
+            $fechaFin = '';
+            $horaFin = '';
+            list($fechaIni, $horaIni) = explode(' ', $request->tiempoIni);
+            list($fechaFin, $horaFin) = explode(' ', $request->tiempoFin);
+            $reserva = new Reserva;
+            $reserva->id_espacio = $request->espacio;
+            $reserva->id_vehiculo = $vehiculo->id_vehiculo;
+            $reserva->reservada_desde_fecha = $fechaIni;
+            $reserva->reservada_desde_hora = $horaIni;
+            $reserva->reservada_hasta_fecha = $fechaFin;
+            $reserva->reservada_hasta_hora = $horaFin;
+            $reserva->fecha_creada = date("Y-m-d");
+            $reserva->hora_creada = date("H:i:s");
+            $reserva->placa_vehiculo = $request->placa;
+            $reserva->id_usuario = $id_usuario;
+            $reserva->save();
+            $espacio = Espacio::where('id_espacio', $request->espacio)->first();
+            $espacio->estado = "reservado";
+            $espacio->update();
+        }else if($rol == "guardia"){
+            $consulta = Vehiculo::where('placa', $request->placa)->exists();
+            if($consulta){
+                $vehiculo = Vehiculo::where('placa', $request->placa)->first();
+            }else{
+                $vehiculo = new Vehiculo();
+                $vehiculo -> id_cliente = $id_usuario;
+                $vehiculo -> marca = $request -> marca;
+                $vehiculo -> color = $request -> color;
+                $vehiculo -> modelo = $request -> modelo;
+                $placa = $request -> placa;
+                $placa = preg_replace('/[^A-Z0-9]/', '', $placa);
+                $placa = str_replace(' ', '', $placa);
+                $vehiculo -> placa = $placa;
+                $vehiculo->save();
+                $vehiculo = Vehiculo::where('placa', $request->placa)->first();
+            }
+            $vehiculo = Vehiculo::where('placa', $request->placa)->first();
+            $fechaIni = '';
+            $horaIni = '';
+            $fechaFin = '';
+            $horaFin = '';
+            list($fechaIni, $horaIni) = explode(' ', $request->tiempoIni);
+            list($fechaFin, $horaFin) = explode(' ', $request->tiempoFin);
+            $reserva = new Reserva;
+            $reserva->id_espacio = $request->espacio;
+            $reserva->id_vehiculo = $vehiculo->id_vehiculo;
+            $reserva->reservada_desde_fecha = $fechaIni;
+            $reserva->reservada_desde_hora = $horaIni;
+            $reserva->reservada_hasta_fecha = $fechaFin;
+            $reserva->reservada_hasta_hora = $horaFin;
+            $reserva->fecha_creada = date("Y-m-d");
+            $reserva->hora_creada = date("H:i:s");
+            $reserva->placa_vehiculo = $request->placa;
+            $reserva->id_usuario = $id_usuario;
+            $reserva->save();
+            $espacio = Espacio::where('id_espacio', $request->espacio)->first();
+            $espacio->estado = "reservado";
+            $espacio->update();
+        }
+        
         return "Se hizo la reserva correctamente";
     }
     public function getReservas(){
