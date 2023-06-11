@@ -26,11 +26,13 @@ class AuthController extends Controller
             'apellido_paterno' => $data['apellido_paterno'],
             'apellido_materno' => $data['apellido_materno'],
             'fecha_nacimiento' => $data['fecha_nacimiento'],
+            'celular' => $data['celular'],
         ]);
 
+        $usuario = User::where("email",$data['email'])->first();
         $cliente = new Cliente;
         $cliente->id_cliente = $data['ci'];
-        $cliente->id_usuario = $user()->id;
+        $cliente->id_usuario = $usuario->id;
         $cliente->save();
 
         $token = $user->createToken('main')->plainTextToken;
