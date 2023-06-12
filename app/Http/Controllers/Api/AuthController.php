@@ -31,12 +31,13 @@ class AuthController extends Controller
         $token = $user->createToken('main')->plainTextToken;
         
         $cliente = new Cliente;
+        $cliente->id_cliente = $data['ci'];
         $cliente->nombres = $data['name'];
         $cliente->apellidos = $data['apellido_paterno']." ".$data['apellido_materno'];
         $cliente->id_usuario = $user->id;
         $cliente->idUsuario = 3;
         $cliente->save();
-        
+
         return response(compact('user', 'token'));
     }
 
