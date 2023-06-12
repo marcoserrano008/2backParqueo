@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnuncioController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -70,6 +71,11 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('getReservas', [ReservaController::class, 'getReservas']);
     Route::get('habilitarEspacio/{id}',[espacioController::class, 'habilitarEspacio']);
     Route::get('eliminarEspacio/{id}',[espacioController::class, 'eliminarEspacio']);
+
+    //anuncios
+    Route::get('verAnuncios', [AnuncioController::class, 'reservar']);
+    Route::get('verAnunciosUsuario', [AnuncioController::class, 'verAnunciosUsuario']);
+    Route::post('enviarAnuncio', [AnuncioController::class, 'reservar']);
 });
 
 

@@ -29,10 +29,10 @@ class AuthController extends Controller
             'celular' => $data['celular']
         ]);
         
-        $cliente = new Cliente;
+        /*$cliente = new Cliente;
         $cliente->id_cliente = $data['ci'];
         $cliente->id_usuario = $user->id;
-        $cliente->save();
+        $cliente->save();*/
         $token = $user->createToken('main')->plainTextToken;
         return response(compact('user', 'token'));
     }
