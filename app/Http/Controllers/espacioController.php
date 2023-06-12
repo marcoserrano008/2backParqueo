@@ -47,8 +47,19 @@ class espacioController extends Controller
             ];
         }
         
-        return $resultado;
-        
+        return $resultado;   
     }
 
+    public function eliminarEspacio($id){
+        $espacio = Espacio::select("id_espacio",$id)->first();
+        $espacio->estado = "deshabilitado";
+        $espacio->update();
+        return "Espacio eliminado con exito";
+    }
+    public function habilitarEspacio($id){
+        $espacio = Espacio::select("id_espacio",$id)->first();
+        $espacio->estado = "libre";
+        $espacio->update();
+        return "Espacio habilitado con exito";
+    }
 }
