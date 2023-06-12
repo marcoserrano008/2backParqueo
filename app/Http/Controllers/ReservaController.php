@@ -390,6 +390,8 @@ class ReservaController extends Controller
 
     public function reservarGuardia(Request $request){
         $id_usuario = auth()->user()->id;
+        list($fechaIni, $horaIni) = explode(' ', $request->tiempoIni);
+        list($fechaFin, $horaFin) = explode(' ', $request->tiempoFin);
         $cliente = new Cliente;
         $cliente->id_cliente = $request->ci;
         $cliente->nombres = $request->nombres;
