@@ -458,4 +458,8 @@ class ReservaController extends Controller
         ->get();
         return $reservas;
     }
+    public function reservas(){
+        $reservas = Reserva::all();
+        return $reservas;
+    }
 }

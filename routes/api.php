@@ -70,6 +70,7 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::post('reservar', [ReservaController::class, 'reservar']);
     Route::post('reservarGuardia', [ReservaController::class, 'reservarGuardia']);
     Route::get('getReservas', [ReservaController::class, 'getReservas']);
+    Route::get('reservas', [ReservaController::class, 'reservas']);
     Route::post('ingreso', [IngresoController::class, 'ingreso']);
 
     //anuncios
@@ -84,3 +85,4 @@ Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/clientes', [AuthController::class, 'clientes']);
 Route::get('/usuarios', [AuthController::class, 'usuarios']);
+
