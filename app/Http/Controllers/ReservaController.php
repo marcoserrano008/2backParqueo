@@ -386,7 +386,7 @@ class ReservaController extends Controller
         $reserva->hora_creada = date("H:i:s");
         $reserva->placa_vehiculo = $request->placa;
         $reserva->id_usuario = $id_usuario;
-        $reserva->idCliente = $cliente->id_cliente;
+        //$reserva->idCliente = $cliente->id_cliente;
         $reserva->save();
         $espacio = Espacio::where("id_espacio",$request->espacio)->first();
         $espacio->estado = "reservado";
@@ -435,7 +435,7 @@ class ReservaController extends Controller
         $reserva->hora_creada = date("H:i:s");
         $reserva->placa_vehiculo = $placa;
         $reserva->id_usuario = $id_usuario;
-        $reserva->idCliente = $request->ci;
+        //$reserva->idCliente = $request->ci;
         $reserva->save();
         $espacio = Espacio::where("id_espacio",$request->espacio)->first();
         $espacio->estado = "reservado";
