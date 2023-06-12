@@ -436,7 +436,7 @@ class ReservaController extends Controller
     }
 
     public function getReservas(){
-        $reservas = Reserva::join('Clientes', 'Reservas.idCliente', '=', 'clientes.id_cliente')
+        $reservas = Reserva::join('Clientes', 'Reservas.idCliente', '=', 'Clientes.id_cliente')
         ->select('Clientes.nombres AS nombres', 'Clientes.apellidos AS apellidos', 'Reservas.reservada_desde_fecha AS desde_fecha',
         'Reservas.reservada_desde_hora AS desde_hora','Reservas.reservada_hasta_fecha AS hasta_fecha','Reservas.reservada_hasta_hora AS hasta_hora',
         'Reservas.placa_vehiculo AS vehiculo','Reservas.id_espacio AS espacio')
