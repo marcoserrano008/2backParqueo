@@ -75,7 +75,7 @@ Route::middleware('auth:sanctum')->group(function() {
     //anuncios
     Route::get('verAnuncios', [AnuncioController::class, 'verAnuncios']);
     Route::get('verAnunciosUsuario', [AnuncioController::class, 'verAnunciosUsuario']);
-    Route::post('enviarAnuncio', [AnuncioController::class, 'reservar']);
+    Route::post('enviarAnuncio', [AnuncioController::class, 'enviarAnuncio']);
 });
 
 
