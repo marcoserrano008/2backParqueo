@@ -367,7 +367,11 @@ class ReservaController extends Controller
     //nueva ruta
     public function reservar(Request $request){
         $id_usuario = auth()->user()->id;
-        $vehiculo = Vehiculo::select('id_vehiculo')->where('placa','=',$request->placa)->first();
+        $cliente = Cliente::where('id_usuario',$id_usuario)->first();
+        $placa = $request->placa;
+        $placa = strtoupper($placa);
+        $placa = str_replace([' ', '-'], '', $placa);
+        $vehiculo = Vehiculo::select('id_vehiculo')->where('placa','=',$placa)->first();
         list($fechaIni, $horaIni) = explode(' ', $request->tiempoIni);
         list($fechaFin, $horaFin) = explode(' ', $request->tiempoFin);
         $reserva = new Reserva;
@@ -381,6 +385,7 @@ class ReservaController extends Controller
         $reserva->hora_creada = date("H:i:s");
         $reserva->placa_vehiculo = $request->placa;
         $reserva->id_usuario = $id_usuario;
+        $reserva->idCliente = $cliente->id_cliente;
         $reserva->save();
         $espacio = Espacio::where("id_espacio",$request->espacio)->first();
         $espacio->estado = "reservado";
@@ -390,6 +395,9 @@ class ReservaController extends Controller
 
     public function reservarGuardia(Request $request){
         $id_usuario = auth()->user()->id;
+        $placa = $request->placa;
+        $placa = strtoupper($placa);
+        $placa = str_replace([' ', '-'], '', $placa);
         list($fechaIni, $horaIni) = explode(' ', $request->tiempoIni);
         list($fechaFin, $horaFin) = explode(' ', $request->tiempoFin);
         $cliente = new Cliente;
@@ -398,10 +406,11 @@ class ReservaController extends Controller
         $cliente->apellidos = $request->apellidos;
         $cliente->id_usuario = 3;
         $cliente->idUsuario = $id_usuario;
+        $cliente->idUsuario = $request->celular;
         $cliente->save();
         $vehiculo = new Vehiculo;
         $vehiculo->marca = $request->marca;
-        $vehiculo->placa = $request->placa;
+        $vehiculo->placa = $placa;
         $vehiculo->color = $request->color;
         $vehiculo->modelo = $request->modelo;
         $vehiculo->id_cliente = $request->ci;
@@ -416,8 +425,9 @@ class ReservaController extends Controller
         $reserva->reservada_hasta_hora = $horaFin;
         $reserva->fecha_creada = date("Y-m-d");
         $reserva->hora_creada = date("H:i:s");
-        $reserva->placa_vehiculo = $request->placa;
+        $reserva->placa_vehiculo = $placa;
         $reserva->id_usuario = $id_usuario;
+        $reserva->idCliente = $request->ci;
         $reserva->save();
         $espacio = Espacio::where("id_espacio",$request->espacio)->first();
         $espacio->estado = "reservado";
@@ -426,7 +436,11 @@ class ReservaController extends Controller
     }
 
     public function getReservas(){
-        $reservas = Reserva::all();
+        $reservas = Reserva::join('Clientes', 'Reservas.idCliente', '=', 'clientes.id_cliente')
+        ->select('Clientes.nombres AS nombres', 'Clientes.apellidos AS apellidos', 'Reservas.reservada_desde_fecha AS desde_fecha',
+        'Reservas.reservada_desde_hora AS desde_hora','Reservas.reservada_hasta_fecha','hasta_fecha','Reservas.reservada_hasta_hora','hasta_hora',
+        'Reservas.placa_vehiculo AS vehiculo','Reservas.id_espacio AS espacio')
+        ->get();
         return $reservas;
     }
 }

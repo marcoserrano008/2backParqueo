@@ -162,4 +162,23 @@ class IngresoController extends Controller
         return $primerEspacioLibre;        
     }
 
+    public function ingreso(Request $request){
+        $placa = $request->placa;
+        $placa = strtoupper($placa);
+        $placa = str_replace([' ', '-'], '', $placa);
+        list($fechaIni, $horaIni) = explode(' ', $request->fecha);
+        $vehiculo = Vehiculo::select('id_vehiculo')->where('placa','=',$placa)->first();
+        $ingreso = new Ingreso;
+        $ingreso->id_vehiculo = $vehiculo->id_vehiculo;
+        $ingreso->fecha_ingreso = $fechaIni;
+        $ingreso->hora_ingreso = $horaIni;
+        $ingreso->id_guardia = 1234567890;
+        $ingreso->id_espacio = $request->espacio;
+        $ingreso->id_bloque = "ZZZ";
+        $ingreso->placa_vehiculo = $placa;
+        $ingreso->id_reserva = $request->reserva;
+        $ingreso->save();
+        return "Ingreso creado exitosamente";
+    }
+
 }
