@@ -35,7 +35,6 @@ class SignupRequest extends FormRequest
             'ci' => 'required|string|max:20',
             'apellido_paterno' => 'required|string|max:20',
             'apellido_materno' => 'required|string|max:20',
-            'fecha_nacimiento' => 'required',
         ];
     }
 }

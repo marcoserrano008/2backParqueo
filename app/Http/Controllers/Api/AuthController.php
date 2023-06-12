@@ -24,16 +24,11 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
             'ci' => $data['ci'],
             'apellido_paterno' => $data['apellido_paterno'],
-            'apellido_materno' => $data['apellido_materno'],
-            'fecha_nacimiento' => $data['fecha_nacimiento'],
-            'celular' => $data['celular']
+            'apellido_materno' => $data['apellido_materno']
         ]);
-        
-        /*$cliente = new Cliente;
-        $cliente->id_cliente = $data['ci'];
-        $cliente->id_usuario = $user->id;
-        $cliente->save();*/
+
         $token = $user->createToken('main')->plainTextToken;
+
         return response(compact('user', 'token'));
     }
 
