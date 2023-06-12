@@ -35,7 +35,7 @@ class AuthController extends Controller
         $cliente->nombres = $data['name'];
         $cliente->apellidos = $data['apellido_paterno']." ".$data['apellido_materno'];
         $cliente->id_usuario = $user->id;
-        $cliente->idUsuario = 3;
+        $cliente->idUsuario = 0;
         $cliente->save();
 
         return response(compact('user', 'token'));

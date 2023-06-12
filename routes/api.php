@@ -68,6 +68,7 @@ Route::middleware('auth:sanctum')->group(function() {
 
     //nuevas rutas Niver
     Route::post('reservar', [ReservaController::class, 'reservar']);
+    Route::post('reservarGuardia', [ReservaController::class, 'reservarGuardia']);
     Route::get('getReservas', [ReservaController::class, 'getReservas']);
 
     //anuncios
