@@ -395,7 +395,7 @@ class ReservaController extends Controller
         $cliente->nombres = $request->nombres;
         $cliente->apellidos = $request->apellidos;
         $cliente->id_usuario = 3;
-        $cliente->id_Usuario = $id_usuario;
+        $cliente->idUsuario = $id_usuario;
         $cliente->save();
         $vehiculo = new Vehiculo;
         $vehiculo->marca = $request->marca;
@@ -420,6 +420,7 @@ class ReservaController extends Controller
         $espacio = Espacio::where("id_espacio",$request->espacio)->first();
         $espacio->estado = "reservado";
         $espacio->update();
+        return "Se hizo la reserva correctamente";
     }
 
     public function getReservas(){
