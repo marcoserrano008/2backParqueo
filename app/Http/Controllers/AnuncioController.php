@@ -27,5 +27,6 @@ class AnuncioController extends Controller{
         }
         $anuncio->fecha = date("Y-m-d H:i:s");
         $anuncio->save();
+        return "Mensaje creado correctamente";
     }
 }
