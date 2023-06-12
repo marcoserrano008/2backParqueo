@@ -8,6 +8,7 @@ use App\Models\Vehiculo;
 use App\Models\Espacio;
 use App\Models\Salida;
 use App\Models\Reserva;
+use App\Models\Pago;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ReservaController;
@@ -163,22 +164,32 @@ class IngresoController extends Controller
     }
 
     public function ingreso(Request $request){
-        $placa = $request->placa;
-        $placa = strtoupper($placa);
-        $placa = str_replace([' ', '-'], '', $placa);
-        list($fechaIni, $horaIni) = explode(' ', $request->fecha);
-        $vehiculo = Vehiculo::select('id_vehiculo')->where('placa','=',$placa)->first();
-        $ingreso = new Ingreso;
-        $ingreso->id_vehiculo = $vehiculo->id_vehiculo;
-        $ingreso->fecha_ingreso = $fechaIni;
-        $ingreso->hora_ingreso = $horaIni;
-        $ingreso->id_guardia = 1234567890;
-        $ingreso->id_espacio = $request->espacio;
-        $ingreso->id_bloque = "ZZZ";
-        $ingreso->placa_vehiculo = $placa;
-        $ingreso->id_reserva = $request->reserva;
-        $ingreso->save();
-        return "Ingreso creado exitosamente";
+        //$pago = Pago::where('id_reserva',$request->id_reserva)->first();
+        /*if($pago->deuda == 0){
+            $placa = $request->placa;
+            $placa = strtoupper($placa);
+            $placa = str_replace([' ', '-'], '', $placa);
+            list($fechaIni, $horaIni) = explode(' ', $request->fecha);
+            $vehiculo = Vehiculo::select('id_vehiculo')->where('placa','=',$placa)->first();
+            $ingreso = new Ingreso;
+            $ingreso->id_vehiculo = $vehiculo->id_vehiculo;
+            $ingreso->fecha_ingreso = $fechaIni;
+            $ingreso->hora_ingreso = $horaIni;
+            $ingreso->id_guardia = 1234567890;
+            $ingreso->id_espacio = $request->espacio;
+            $ingreso->id_bloque = "ZZZ";
+            $ingreso->placa_vehiculo = $placa;
+            $ingreso->id_reserva = $request->reserva;
+            $ingreso->save();
+            $espacio = Espacio::where('id_espacio',$request->espacio)->fisrt();
+            $espacio->estado = "ocupado";
+            $espacio->update();
+            return "Ingreso creado exitosamente";
+        }*/
+        $espacio = Espacio::where("id_espacio",$request->espacio)->first();
+        $espacio->estado = "ocupado";
+        $espacio->update();
+        return "Espacio ocupado";
     }
 
 }

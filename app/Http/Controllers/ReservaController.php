@@ -7,6 +7,7 @@ use App\Models\Reserva;
 use App\Models\Cliente;
 use App\Models\Vehiculo;
 use App\Models\Espacio;
+use App\Models\Pago;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 
@@ -390,6 +391,13 @@ class ReservaController extends Controller
         $espacio = Espacio::where("id_espacio",$request->espacio)->first();
         $espacio->estado = "reservado";
         $espacio->update();
+        /*$pago = new Pago;
+        $pago->pagado = $request->pago;
+        $pago->deuda = 0;
+        $pago->id_reserva = $reserva->id_reserva;
+        $pago->id_salida = 0;
+        $pago->id_espacio = $request->espacio;
+        $pago->save();*/
         return "Se hizo la reserva correctamente";
     }
 
@@ -432,6 +440,13 @@ class ReservaController extends Controller
         $espacio = Espacio::where("id_espacio",$request->espacio)->first();
         $espacio->estado = "reservado";
         $espacio->update();
+        /*$pago = new Pago;
+        $pago->pagado = $request->pago;
+        $pago->deuda = 0;
+        $pago->id_reserva = $reserva->id_reserva;
+        $pago->id_salida = 0;
+        $pago->id_espacio = $request->espacio;
+        $pago->save();*/
         return "Se hizo la reserva correctamente";
     }
 
