@@ -384,6 +384,27 @@ class ReservaController extends Controller
         $reserva->save();
         return "Se hizo la reserva correctamente";
     }
+
+    public function reservarGuardia(Request $request){
+        $id_usuario = auth()->user()->id;
+        $vehiculo = Vehiculo::select('id_vehiculo')->where('placa','=',$request->placa)->first();
+        list($fechaIni, $horaIni) = explode(' ', $request->tiempoIni);
+        list($fechaFin, $horaFin) = explode(' ', $request->tiempoFin);
+        $reserva = new Reserva;
+        $reserva->id_espacio = $request->espacio;
+        $reserva->id_vehiculo = $vehiculo->id_vehiculo;
+        $reserva->reservada_desde_fecha = $fechaIni;
+        $reserva->reservada_desde_hora = $horaIni;
+        $reserva->reservada_hasta_fecha = $fechaFin;
+        $reserva->reservada_hasta_hora = $horaFin;
+        $reserva->fecha_creada = date("Y-m-d");
+        $reserva->hora_creada = date("H:i:s");
+        $reserva->placa_vehiculo = $request->placa;
+        $reserva->id_usuario = $id_usuario;
+        $reserva->save();
+        return "Se hizo la reserva correctamente";
+    }
+
     public function getReservas(){
         $reservas = Reserva::all();
         return $reservas;

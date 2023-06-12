@@ -57,8 +57,6 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('ver-ingresos-placa/{placa}', [IngresoController::class, 'verIngresosParqueoPlaca']);
     Route::get('ver-ingresos-todos', [IngresoController::class, 'verIngresosParqueoTodos']);
 
-    
-
     //Ruta para registrar la salida del parqueo
     Route::post('registrar-salida', [SalidaController::class, 'registrarSalidaParqueo']);
     

@@ -24,7 +24,8 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
             'ci' => $data['ci'],
             'apellido_paterno' => $data['apellido_paterno'],
-            'apellido_materno' => $data['apellido_materno']
+            'apellido_materno' => $data['apellido_materno'],
+            'fecha_nacimiento' => $data['fecha_nacimiento'],
         ]);
 
         $token = $user->createToken('main')->plainTextToken;
