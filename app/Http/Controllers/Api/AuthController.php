@@ -26,13 +26,14 @@ class AuthController extends Controller
             'apellido_paterno' => $data['apellido_paterno'],
             'apellido_materno' => $data['apellido_materno'],
             'fecha_nacimiento' => $data['fecha_nacimiento'],
+            'celular' => $data['celular']
         ]);
 
         $token = $user->createToken('main')->plainTextToken;
-        $user = Auth::user();
+        $usuario = User::select('ci',$data['ci'])->first();
         $user = new Cliente;
         $user->id_cliente = $data['ci'];
-        $user->id_usuario = $user['id'];
+        $user->id_usuario = $usuario->id;
         $user->save();
 
         return response(compact('user', 'token'));
@@ -68,5 +69,9 @@ class AuthController extends Controller
     public function clientes(){
         $clientes = Cliente::all();
         return $clientes;
+    }
+    public function usuarios(){
+        $usuarios = User::all();
+        return $usuarios;
     }
 }

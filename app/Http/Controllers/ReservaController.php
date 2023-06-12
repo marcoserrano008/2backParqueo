@@ -370,7 +370,6 @@ class ReservaController extends Controller
         $vehiculo = Vehiculo::select('id_vehiculo')->where('placa','=',$request->placa)->first();
         list($fechaIni, $horaIni) = explode(' ', $request->tiempoIni);
         list($fechaFin, $horaFin) = explode(' ', $request->tiempoFin);
-
         $reserva = new Reserva;
         $reserva->id_espacio = $request->espacio;
         $reserva->id_vehiculo = $vehiculo->id_vehiculo;

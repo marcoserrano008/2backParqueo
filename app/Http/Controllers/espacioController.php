@@ -51,6 +51,4 @@ class espacioController extends Controller
         
     }
 
-
-    
 }
